@@ -2,6 +2,7 @@ import unittest
 from datetime import date
 from main import Membre, Tache, Projet, EmailNotificationStrategy
 
+
 class TestProjet(unittest.TestCase):
     def setUp(self):
         self.membre1 = Membre(nom="Alice", role="Chef de projet")
@@ -12,14 +13,14 @@ class TestProjet(unittest.TestCase):
             date_debut=date(2023, 5, 1),
             date_fin=date(2023, 5, 15),
             responsable=self.membre1,
-            statut="En cours"
+            statut="En cours",
         )
         self.projet = Projet(
             nom="Projet Alpha",
             description="Développement d'une application web",
             date_debut=date(2023, 5, 1),
             date_fin=date(2023, 12, 31),
-            budget=100000.0
+            budget=100000.0,
         )
         self.projet.definir_notification_strategy(EmailNotificationStrategy())
 
@@ -43,5 +44,6 @@ class TestProjet(unittest.TestCase):
         self.assertIn("Alice", rapport)
         self.assertIn("Analyse des besoins", rapport)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
