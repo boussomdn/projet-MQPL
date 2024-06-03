@@ -1,15 +1,30 @@
-
 from datetime import date
 from typing import List, Optional
-from notification_strategy import NotificationStrategy, EmailNotificationStrategy, SMSNotificationStrategy, NotificationContext
+from notification_strategy import (
+    NotificationStrategy,
+    EmailNotificationStrategy,
+    SMSNotificationStrategy,
+    NotificationContext,
+)
+
 
 class Membre:
     def __init__(self, nom: str, role: str):
         self.nom = nom
         self.role = role
 
+
 class Tache:
-    def __init__(self, nom: str, description: str, date_debut: date, date_fin: date, responsable: Membre, statut: str, dependances: Optional[List['Tache']] = None):
+    def __init__(
+        self,
+        nom: str,
+        description: str,
+        date_debut: date,
+        date_fin: date,
+        responsable: Membre,
+        statut: str,
+        dependances: Optional[List["Tache"]] = None,
+    ):
         self.nom = nom
         self.description = description
         self.date_debut = date_debut
@@ -18,6 +33,7 @@ class Tache:
         self.statut = statut
         self.dependances = dependances if dependances else []
 
+
 class Equipe:
     def __init__(self):
         self.membres = []
@@ -25,10 +41,12 @@ class Equipe:
     def ajouter_membre(self, membre: Membre):
         self.membres.append(membre)
 
+
 class Jalon:
     def __init__(self, nom: str, date: date):
         self.nom = nom
         self.date = date
+
 
 class Risque:
     def __init__(self, description: str, probabilite: float, impact: str):
@@ -36,14 +54,23 @@ class Risque:
         self.probabilite = probabilite
         self.impact = impact
 
+
 class Changement:
     def __init__(self, description: str, version: str, date: date):
         self.description = description
         self.version = version
         self.date = date
 
+
 class Projet:
-    def __init__(self, nom: str, description: str, date_debut: date, date_fin: date, budget: float):
+    def __init__(
+        self,
+        nom: str,
+        description: str,
+        date_debut: date,
+        date_fin: date,
+        budget: float,
+    ):
         self.nom = nom
         self.description = description
         self.date_debut = date_debut
@@ -83,11 +110,15 @@ class Projet:
 
     def ajouter_changement(self, changement: Changement):
         self.changements.append(changement)
-        self.notifier_membres(f"Changement enregistré: {changement.description} (version {changement.version})")
-    
+        self.notifier_membres(
+            f"Changement enregistré: {changement.description} (version {changement.version})"
+        )
+
     def definir_budget(self, budget: float):
         self.budget = budget
-        self.notifier_membres(f"Le budget du projet a été défini à {budget} Unité Monetaire")
+        self.notifier_membres(
+            f"Le budget du projet a été défini à {budget} Unité Monetaire"
+        )
 
     def calculer_chemin_critique(self):
         return max(self.taches, key=lambda t: t.date_fin)
@@ -116,62 +147,55 @@ class Projet:
         return rapport
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     projet = Projet(
         nom="Projet MQPL",
         description="Gestion de projet",
         date_debut=date(2023, 1, 1),
         date_fin=date(2023, 12, 31),
-        budget=50000
+        budget=50000,
     )
-    
+
     projet.definir_notification_strategy(EmailNotificationStrategy())
-    
+
     modou = Membre(nom="Modou", role="Développeur")
     christian = Membre(nom="Christian", role="Analyste")
     projet.ajouter_membre_equipe(modou)
     projet.ajouter_membre_equipe(christian)
-    
+
     tache1 = Tache(
         nom="Analyse des besoins",
         description="Analyser les besoins du client",
         date_debut=date(2023, 2, 1),
         date_fin=date(2023, 2, 28),
         responsable=modou,
-        statut="En cours"
+        statut="En cours",
     )
     projet.ajouter_tache(tache1)
-    
+
     tache2 = Tache(
         nom="Développement",
         description="Développer les fonctionnalités",
         date_debut=date(2023, 3, 1),
         date_fin=date(2023, 6, 30),
         responsable=christian,
-        statut="En attente"
+        statut="En attente",
     )
     projet.ajouter_tache(tache2)
-    
+
     projet.definir_budget(50000)
-    
-    risque = Risque(
-        description="Retard de livraison",
-        probabilite=0.4,
-        impact="Élevé"
-    )
+
+    risque = Risque(description="Retard de livraison", probabilite=0.4, impact="Élevé")
     projet.ajouter_risque(risque)
 
-    jalon = Jalon(
-        nom="Phase 1 terminée",
-        date=date(2023, 6, 30)
-    )
+    jalon = Jalon(nom="Phase 1 terminée", date=date(2023, 6, 30))
     projet.ajouter_jalon(jalon)
-    
+
     changement = Changement(
         description="Changement de la portée du projet",
         version="2",
-        date=date(2023, 5, 1)
+        date=date(2023, 5, 1),
     )
     projet.ajouter_changement(changement)
-    
+
     print(projet.generer_rapport())
