@@ -3,7 +3,6 @@ from typing import List, Optional
 from notification_strategy import (
     NotificationStrategy,
     EmailNotificationStrategy,
-    SMSNotificationStrategy,
     NotificationContext,
 )
 
@@ -90,7 +89,8 @@ class Projet:
     def notifier_membres(self, message: str):
         if self.notification_context:
             for membre in self.equipe.membres:
-                self.notification_context.envoyer_notification(message, membre.nom)
+                self.notification_context.envoyer_notification(message,
+                                                               membre.nom)
 
     def ajouter_tache(self, tache: Tache):
         self.taches.append(tache)
