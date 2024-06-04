@@ -6,19 +6,19 @@ import unittest
 from datetime import date
 import sys
 import os
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 from main import Membre, Tache, Projet, EmailNotificationStrategy
+
+# Ajoutez le chemin au sys.path pour trouver le module main
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class TestProjet(unittest.TestCase):
     """
     Classe de test pour la classe Projet.
-    
 
     Cette classe contient des tests unitaires pour vérifier les fonctionnalités
-    de la classe Projet, y compris l'ajout de membres d'équipe, l'ajout de tâches,
+    de la classe Projet, y compris l'ajout de membres d'équipe,
+    l'ajout de tâches,
     le calcul du chemin critique et la génération de rapports.
     """
 
