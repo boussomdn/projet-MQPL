@@ -137,8 +137,7 @@ class Projet:
         """Envoie une notification aux membres de l'équipe."""
         if self.notification_context:
             for membre in self.equipe.membres:
-                self.notification_context.envoyer_notification(message,
-                                                               membre.nom)
+                self.notification_context.envoyer_notification(message, membre.nom)
 
     def ajouter_tache(self, tache: Tache):
         """Ajoute une tâche au projet et notifie les membres."""
@@ -153,8 +152,7 @@ class Projet:
     def ajouter_risque(self, risque_projet: Risque):
         """Ajoute un risque au projet et notifie les membres."""
         self.risques.append(risque_projet)
-        self.notifier_membres(
-            f"Nouveau risque ajouté: {risque_projet.description}")
+        self.notifier_membres(f"Nouveau risque ajouté: {risque_projet.description}")
 
     def ajouter_jalon(self, jalon_projet: Jalon):
         """Ajoute un jalon au projet et notifie les membres."""
