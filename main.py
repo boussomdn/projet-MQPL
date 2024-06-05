@@ -137,7 +137,8 @@ class Projet:
         """Envoie une notification aux membres de l'équipe."""
         if self.notification_context:
             for membre in self.equipe.membres:
-                self.notification_context.envoyer_notification(message, membre.nom)
+                self.notification_context.envoyer_notification(message,
+                                                               membre.nom)
 
     def ajouter_tache(self, tache: Tache):
         """Ajoute une tâche au projet et notifie les membres."""
@@ -152,7 +153,8 @@ class Projet:
     def ajouter_risque(self, risque_projet: Risque):
         """Ajoute un risque au projet et notifie les membres."""
         self.risques.append(risque_projet)
-        self.notifier_membres(f"Nouveau risque ajouté: {risque_projet.description}")
+        self.notifier_membres(
+            f"Nouveau risque ajouté: {risque_projet.description}")
 
     def ajouter_jalon(self, jalon_projet: Jalon):
         """Ajoute un jalon au projet et notifie les membres."""
@@ -163,7 +165,8 @@ class Projet:
         """Ajoute un changement au projet et notifie les membres."""
         self.changements.append(changement_projet)
         self.notifier_membres(
-            f"Changement enregistré: {changement_projet.description} (version {changement_projet.version})"
+            f"Changement enregistré: {changement_projet.description}"
+            f"(version {changement_projet.version})"
         )
 
     def definir_budget(self, budget: float):
@@ -185,16 +188,20 @@ class Projet:
             rapport += f"  - {membre.nom} ({membre.role})\n"
         rapport += "Tâches:\n"
         for tache in self.taches:
-            rapport += f"  - {tache.nom}: {tache.statut} (de {tache.date_debut} à {tache.date_fin})\n"
+            rapport += f"  - {tache.nom}: {tache.statut}"
+            f"(de {tache.date_debut} à {tache.date_fin})\n"
         rapport += "Risques:\n"
         for risk in self.risques:
-            rapport += f"  - {risk.description} (Probabilité: {risk.probabilite}, Impact: {risk.impact})\n"
+            rapport += f"  - {risk.description} (Probabilité:"
+            f"{risk.probabilite}, Impact: {risk.impact})\n"
         rapport += "Jalons:\n"
         for milestone in self.jalons:
-            rapport += f"  - {milestone.nom} à la date {milestone.date_jalon}\n"
+            rapport += f"  - {milestone.nom} à la date"
+            f"{milestone.date_jalon}\n"
         rapport += "Changements:\n"
         for change in self.changements:
-            rapport += f"  - {change.description} (Version: {change.version} le {change.date_changement})\n"
+            rapport += f"  - {change.description} (Version: "
+            f"{change.version} le {change.date_changement})\n"
         return rapport
 
 
@@ -207,16 +214,16 @@ if __name__ == "__main__":
         budget=50000,
     )
     projet.definir_notification_strategy(EmailNotificationStrategy())
-    modou = Membre(nom="Modou", role="Développeur")
-    christian = Membre(nom="Christian", role="Analyste")
-    projet.ajouter_membre_equipe(modou)
-    projet.ajouter_membre_equipe(christian)
+    Maty = Membre(nom="Maty", role="Développeur")
+    Awa = Membre(nom="Awa", role="Analyste")
+    projet.ajouter_membre_equipe(Maty)
+    projet.ajouter_membre_equipe(Awa)
     tache1 = Tache(
         nom="Analyse des besoins",
         description="Analyser les besoins du client",
         date_debut=date(2023, 2, 1),
         date_fin=date(2023, 2, 28),
-        responsable=modou,
+        responsable=Maty,
         statut="En cours",
     )
     projet.ajouter_tache(tache1)
@@ -225,7 +232,7 @@ if __name__ == "__main__":
         description="Développer les fonctionnalités",
         date_debut=date(2023, 3, 1),
         date_fin=date(2023, 6, 30),
-        responsable=christian,
+        responsable=Awa,
         statut="En attente",
     )
     projet.ajouter_tache(tache2)
